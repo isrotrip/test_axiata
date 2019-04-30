@@ -20,7 +20,7 @@ class Robot {
   //then create the functional movement
   MOVE() {
     if(this.placeStatus === false) {
-      console.log('please place it first')
+      console.log('please place it first, before move')
     } else {
       //the maximum table is 5 and the minimum table is 0, so there must be a constrain movement function
       if(this.direction === 'NORTH') {
@@ -45,7 +45,7 @@ class Robot {
   //the robot can only move right and left so i create 2 object methods of LEFT and RIGHT
   LEFT() {
     if(this.placeStatus === false) {
-      console.log('please place it first')
+      console.log('please place it first, before turn left')
     } else {
       //we can use available function for the more easy syntax, and check with the index current position
       //the availableDirection create use the basic of clockwise
@@ -60,7 +60,7 @@ class Robot {
   }
   RIGHT() {
     if(this.placeStatus === false) {
-      console.log('please place it first') 
+      console.log('please place it first, before turn right') 
     } else {
       //similiar to the LEFT, the RIGHT have a special condition on the 3rd index
       if(this.availableDirection.indexOf(this.direction) === 3) {
@@ -74,18 +74,19 @@ class Robot {
   //then check for the current location
   REPORT() {
     if(this.placeStatus === false) {
-      console.log('please place it first')
+      console.log('please place it first, before report')
     } else {
       console.log(this.positionX, this.positionY, this.direction)
     }
   }
   SHOW_IN_2D() {
     if(this.placeStatus === false) {
-      console.log('please place it first') 
+      console.log('please place it first, before show in 2D') 
     } else {
       let paint = '';
       for(let i = 0; i < 5; i++) {
-        paint += '---------------\n';
+        paint += ' ---------------\n';
+        paint += `${(i+1)}`
         for(let j = 0; j < 5; j++) {
           if(5 - i !== this.positionX || j + 1 !== this.positionY){
             paint += '| |';
@@ -95,26 +96,37 @@ class Robot {
         }
         paint += '\n';
       }
-      paint += '---------------\n';
+      paint += ' ---------------\n';
+      for(let i = 0; i < 5; i++) {
+        paint += `  ${i+1}`
+      }
       console.log(paint);
     }
   }
 }
 
+/////////////////////////////
+/////////////////////////////
+//////    TESTING      //////
+/////////////////////////////
+/////////////////////////////
+
+console.log('default testing');
+console.log('---------------');
 //test A
-const RobotA = new Robot()
+const RobotA = new Robot();
 RobotA.PLACE(0, 0, 'NORTH');
 RobotA.MOVE();
 console.log('Robot A Report');
 RobotA.REPORT();
 //test B
-const RobotB = new Robot()
+const RobotB = new Robot();
 RobotB.PLACE(0, 0, 'NORTH');
 RobotB.LEFT();
 console.log('Robot B Report');
 RobotB.REPORT();
 //test C
-const RobotC = new Robot()
+const RobotC = new Robot();
 RobotC.PLACE(1, 2, 'EAST');
 RobotC.MOVE();
 RobotC.MOVE();
@@ -123,6 +135,20 @@ RobotC.MOVE();
 console.log('Robot C Report');
 RobotC.REPORT();
 
+console.log('                  ');
+console.log('example for create location in 2D');
 RobotC.SHOW_IN_2D();
 
-// we can test it by type node to test it out!
+console.log('                  ');
+console.log('warning testing');
+console.log('---------------');
+const RobotTest = new Robot();
+//test if not place robot try to move, should return warning
+RobotTest.MOVE();
+//test if not place robot try to turn left or fight, should return warning
+RobotTest.LEFT();
+RobotTest.RIGHT();
+//test if not place robot try to get a report
+RobotTest.REPORT();
+//test if not place try to show in 2D
+RobotTest.SHOW_IN_2D();
