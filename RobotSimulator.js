@@ -85,15 +85,17 @@ class Robot {
     } else {
       let paint = '';
       for(let i = 0; i < 5; i++) {
-        paint = '--------------------';
+        paint += '---------------\n';
         for(let j = 0; j < 5; j++) {
-          if(4 - i !== this.positionX && 4 - j !== this.positionY){
+          if(5 - i !== this.positionX || j + 1 !== this.positionY){
             paint += '| |';
           } else {
             paint += '|R|';
           }
         }
+        paint += '\n';
       }
+      paint += '---------------\n';
       console.log(paint);
     }
   }
@@ -120,5 +122,7 @@ RobotC.LEFT();
 RobotC.MOVE();
 console.log('Robot C Report');
 RobotC.REPORT();
+
+RobotC.SHOW_IN_2D();
 
 // we can test it by type node to test it out!
