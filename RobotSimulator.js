@@ -7,58 +7,95 @@ class Robot {
     this.direction = direction;
     //this is available condition of the facing robot, because of each robot can only change direction into 90 degree
     this.availableDirection = ['NORTH', 'EAST', 'SOUTH', 'WEST'];
+    //there's a rule that robot can ignore if haven't been place
+    this.placeStatus = false;
   }
   //create functional place
   PLACE(positionX, positionY, direction) {
     this.positionX = positionX;
     this.positionY = positionY;
     this.direction = direction;
+    this.placeStatus = true;
   }
   //then create the functional movement
   MOVE() {
-    //the maximum table is 5 and the minimum table is 0, so there must be a constrain movement function
-    if(this.direction === 'NORTH') {
-      if(this.positionY < 5) {
-        this.positionY += 1;
-      }
-    } else if (this.direction === 'SOUTH') {
-      if(this.positionY > 1) {
-        this.positionY -= 1;
-      }
-    } else if (this.direction === 'WEST') {
-      if(this.positionX > 1) {
-        this.positionX -= 1;
-      }
+    if(this.placeStatus === false) {
+      console.log('please place it first')
     } else {
-      if(this.positionX < 5 ) {
-        this.positionX += 1;
+      //the maximum table is 5 and the minimum table is 0, so there must be a constrain movement function
+      if(this.direction === 'NORTH') {
+        if(this.positionY < 5) {
+          this.positionY += 1;
+        }
+      } else if (this.direction === 'SOUTH') {
+        if(this.positionY > 1) {
+          this.positionY -= 1;
+        }
+      } else if (this.direction === 'WEST') {
+        if(this.positionX > 1) {
+          this.positionX -= 1;
+        }
+      } else {
+        if(this.positionX < 5 ) {
+          this.positionX += 1;
+        }
       }
     }
   }
   //the robot can only move right and left so i create 2 object methods of LEFT and RIGHT
   LEFT() {
-    //we can use available function for the more easy syntax, and check with the index current position
-    //the availableDirection create use the basic of clockwise
-    //in the left 0 is minimum so we should make special condition, that will turn into 'WEST'
-    if(this.availableDirection.indexOf(this.direction) === 0) {
-      this.direction = 'WEST';
+    if(this.placeStatus === false) {
+      console.log('please place it first')
     } else {
-      //else should just return the available direction minus by 1 for the current direction
-      this.direction = this.availableDirection[this.availableDirection.indexOf(this.direction) - 1]
+      //we can use available function for the more easy syntax, and check with the index current position
+      //the availableDirection create use the basic of clockwise
+      //in the left 0 is minimum so we should make special condition, that will turn into 'WEST'
+      if(this.availableDirection.indexOf(this.direction) === 0) {
+        this.direction = 'WEST';
+      } else {
+        //else should just return the available direction minus by 1 for the current direction
+        this.direction = this.availableDirection[this.availableDirection.indexOf(this.direction) - 1]
+      }
     }
   }
   RIGHT() {
-    //similiar to the LEFT, the RIGHT have a special condition on the 3rd index
-    if(this.availableDirection.indexOf(this.direction) === 3) {
-      this.direction = 'NORTH';
+    if(this.placeStatus === false) {
+      console.log('please place it first') 
     } else {
-      //else should just return the available direction plus by 1 for the current direction
-      this.direction = this.availableDirection[this.availableDirection.indexOf(this.direction) + 1]
+      //similiar to the LEFT, the RIGHT have a special condition on the 3rd index
+      if(this.availableDirection.indexOf(this.direction) === 3) {
+        this.direction = 'NORTH';
+      } else {
+        //else should just return the available direction plus by 1 for the current direction
+        this.direction = this.availableDirection[this.availableDirection.indexOf(this.direction) + 1]
+      }
     }
   }
   //then check for the current location
   REPORT() {
-    console.log(this.positionX, this.positionY, this.direction)
+    if(this.placeStatus === false) {
+      console.log('please place it first')
+    } else {
+      console.log(this.positionX, this.positionY, this.direction)
+    }
+  }
+  SHOW_IN_2D() {
+    if(this.placeStatus === false) {
+      console.log('please place it first') 
+    } else {
+      let paint = '';
+      for(let i = 0; i < 5; i++) {
+        paint = '--------------------';
+        for(let j = 0; j < 5; j++) {
+          if(4 - i !== this.positionX && 4 - j !== this.positionY){
+            paint += '| |';
+          } else {
+            paint += '|R|';
+          }
+        }
+      }
+      console.log(paint);
+    }
   }
 }
 
