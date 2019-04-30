@@ -2,14 +2,14 @@
 // user can change it through class method CHANGE 
 class Robot {
   constructor(posX = 0, posY = 0, direction = 'NORTH') {
-    positionX = posX;
-    positionY = posY;
-    direction = direction;
+    this.positionX = posX;
+    this.positionY = posY;
+    this.direction = direction;
     //this is available condition of the facing robot, because of each robot can only change direction into 90 degree
-    availableDirection = ['NORTH', 'EAST', 'SOUTH', 'WEST'];
+    this.availableDirection = ['NORTH', 'EAST', 'SOUTH', 'WEST'];
   }
   //create functional place
-  CHANGE(positionX, positionY, direction) {
+  PLACE(positionX, positionY, direction) {
     this.positionX = positionX;
     this.positionY = positionY;
     this.direction = direction;
@@ -41,7 +41,7 @@ class Robot {
     //the availableDirection create use the basic of clockwise
     //in the left 0 is minimum so we should make special condition, that will turn into 'WEST'
     if(this.availableDirection.indexOf(this.direction) === 0) {
-      this.direction === 'WEST';
+      this.direction = 'WEST';
     } else {
       //else should just return the available direction minus by 1 for the current direction
       this.direction = this.availableDirection[this.availableDirection.indexOf(this.direction) - 1]
@@ -50,7 +50,7 @@ class Robot {
   RIGHT() {
     //similiar to the LEFT, the RIGHT have a special condition on the 3rd index
     if(this.availableDirection.indexOf(this.direction) === 3) {
-      this.direction === 'NORTH';
+      this.direction = 'NORTH';
     } else {
       //else should just return the available direction plus by 1 for the current direction
       this.direction = this.availableDirection[this.availableDirection.indexOf(this.direction) + 1]
@@ -62,6 +62,26 @@ class Robot {
   }
 }
 
-
+//test A
+const RobotA = new Robot()
+RobotA.PLACE(0, 0, 'NORTH');
+RobotA.MOVE();
+console.log('Robot A Report');
+RobotA.REPORT();
+//test B
+const RobotB = new Robot()
+RobotB.PLACE(0, 0, 'NORTH');
+RobotB.LEFT();
+console.log('Robot B Report');
+RobotB.REPORT();
+//test C
+const RobotC = new Robot()
+RobotC.PLACE(1, 2, 'EAST');
+RobotC.MOVE();
+RobotC.MOVE();
+RobotC.LEFT();
+RobotC.MOVE();
+console.log('Robot C Report');
+RobotC.REPORT();
 
 // we can test it by type node to test it out!
